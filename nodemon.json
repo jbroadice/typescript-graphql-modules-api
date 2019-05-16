@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "src/",
+    "knexfile.ts",
+    ".env"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

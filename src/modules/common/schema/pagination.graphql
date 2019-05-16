@@ -1,0 +1,21 @@
+interface PaginatedList {
+  data: [Entity!]!
+  pageInfo: PaginationInfo!
+}
+
+type PaginationInfo {
+  # The current page number.
+  page: Int!
+
+  # The maximum number of results returned per page.
+  limit: Int!
+
+  # The total number of results.
+  count: Int!
+
+  # The total number of pages.
+  countPages: Int!
+
+  # Is there a next page?
+  hasNextPage: Boolean!
+}

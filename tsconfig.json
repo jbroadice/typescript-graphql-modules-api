@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["es2017", "esnext.asynciterable", "dom"],
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "typeRoots": ["node_modules/@types"],
+    "paths": {
+      "@utils/*": ["./utils/*"],
+      "@models": ["./models"],
+      "@modules/*": ["./modules/*"],
+      "@resolvers-types": ["./resolvers-types"]
+    },
+    "baseUrl": "./src/"
+  },
+  "include": ["src/**/*", "migrations/**/*", "seeds/**/*"],
+  "exclude": ["node_modules"]
+}

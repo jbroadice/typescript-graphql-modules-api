@@ -1,0 +1,9 @@
+.env
+node_modules
+dist
+build/*
+src/resolvers-types.ts
+logs
+yarn-error.log
+public.key
+private.key

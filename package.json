@@ -1,0 +1,81 @@
+{
+  "name": "typescript-graphql-modules-api",
+  "version": "1.0.0",
+  "description": "A TypeScript GraphQL API using GraphQL Modules with code auto-generation.",
+  "main": "src/server.ts",
+  "scripts": {
+    "postinstall": "cp -n .env.example .env || true",
+    "schema:build": "ts-node -r tsconfig-paths/register src/print-schema.ts",
+    "schema:check": "yarn schema:build && apollo service:check",
+    "schema:publish": "yarn schema:build && apollo service:push",
+    "generate": "gql-gen",
+    "generate:watch": "nodemon -e graphql --exec yarn generate",
+    "start:server": "ts-node -r tsconfig-paths/register src/server.ts",
+    "start:server:dev": "node --inspect ./node_modules/.bin/ts-node -r tsconfig-paths/register src/server.ts",
+    "start:server:watch": "nodemon -e ts --exec yarn start:server:dev",
+    "dev": "yarn generate && yarn schema:build && concurrently \"yarn generate:watch\" \"yarn start:server:watch\"",
+    "start": "NODE_ENV=production yarn generate && yarn start:server",
+    "build": "yarn generate && tsc && yarn schema:build",
+    "format:ts": "prettier --write \"src/**/*.{ts,tsx}\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "author": "Jack Chapple",
+  "license": "ISC",
+  "dependencies": {
+    "@graphql-modules/core": "0.2.17",
+    "@graphql-modules/di": "^0.2.17",
+    "@graphql-modules/epoxy": "0.2.17",
+    "@graphql-modules/logger": "0.2.3",
+    "@graphql-modules/sonar": "0.2.17",
+    "@graphql-modules/utils": "0.2.17",
+    "apollo-server-express": "^2.2.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "graphql": "^14.0.2",
+    "graphql-code-generator": "0.14.1",
+    "graphql-codegen-typescript-common": "0.14.1",
+    "graphql-codegen-typescript-resolvers": "0.14.1",
+    "graphql-codegen-typescript-server": "0.14.1",
+    "graphql-import-node": "^0.0.1",
+    "graphql-iso-date": "^3.6.1",
+    "graphql-tools": "^4.0.3",
+    "jsonwebtoken": "^8.4.0",
+    "knex": "^0.15.2",
+    "lodash": "^4.17.11",
+    "mysql": "^2.16.0",
+    "objection": "^1.4.0",
+    "rand-token": "^0.4.0",
+    "reflect-metadata": "^0.1.12",
+    "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.7.0",
+    "typescript": "^3.1.6"
+  },
+  "devDependencies": {
+    "@types/faker": "^4.1.4",
+    "@types/graphql": "^14.0.2",
+    "@types/knex": "^0.15.1",
+    "@types/lodash": "^4.14.118",
+    "@types/node": "^10.12.10",
+    "apollo": "^2.1.4",
+    "concurrently": "^4.1.0",
+    "faker": "^4.1.0",
+    "husky": "^1.2.0",
+    "jest": "^23.1.0",
+    "lint-staged": "^8.1.0",
+    "nodemon": "^1.18.7",
+    "prettier": "1.15.3"
+  }
+}

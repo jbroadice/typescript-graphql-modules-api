@@ -1,0 +1,59 @@
+directive @auth on FIELD_DEFINITION
+directive @protect(role: String) on FIELD_DEFINITION
+
+# Represents the available User Role types.
+enum UserRoleType {
+  ADMIN
+  CUSTOMER
+  DEALER
+}
+
+# Root queries
+type Query {
+  # Gets the current User.
+  me: User! @auth
+
+  # Gets a User with the specified ID.
+  user(id: ID!): User @auth
+
+  # Gets a collection of Users.
+  users(name: String, roleType: UserRoleType, page: Int): UserList! @auth
+}
+
+type Mutation {
+  # Gets authentication tokens for a user, given an email address and password.
+  login(email: String!, password: String!): AuthenticationResponse!
+
+  # Gets renewed authentication tokens, given a valid refresh token.
+  refreshToken(refreshToken: String!): AuthenticationResponse! @auth
+}
+
+type AuthenticationResponse {
+  # A valid JSON Web Token, which can be used to authenticate requests to this API.
+  token: String!
+
+  # A Refresh Token, which can be used to refresh expired JSON Web Tokens.
+  refreshToken: String!
+}
+
+type User implements Entity {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  roleType: UserRoleType
+  emails(verified: Boolean, primary: Boolean): [EmailAddress!]
+  timestamps: EntityTimestamps
+}
+
+type EmailAddress implements Entity {
+  email: String!
+  verified: Boolean!
+  primary: Boolean!
+  user: User!
+  timestamps: EntityTimestamps
+}
+
+type UserList implements PaginatedList {
+  data: [User!]!
+  pageInfo: PaginationInfo!
+}
