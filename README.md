@@ -9,3 +9,5 @@ Run the server:
 
 Run the server in development mode:
 ```npm run dev```
+
+See `package.json` for all available npm commands!
